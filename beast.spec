@@ -18,7 +18,7 @@ BuildRequires:	libgnomecanvas-devel >= 2.4.0
 BuildRequires:	libmad-devel >= 0.14.2
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
-BuildRequires:	libvorbis-devel >= 1.0
+BuildRequires:	libvorbis-devel >= 1:1.0
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
 Requires(post,postun):	/sbin/ldconfig
