@@ -1,19 +1,17 @@
 Summary:	BEAST (the Bedevilled Audio System)
 Summary(pl):	System d¼wiêku BEAST (Bedevilled Audio System)
 Name:		beast
-Version:	0.6.2
-Release:	2
+Version:	0.6.3
+Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://beast.gtk.org/beast-ftp/v0.6/%{name}-%{version}.tar.gz
-# Source0-md5:	fb86207ba14069956d39a99c62da5bd7
+# Source0-md5:	84e5bb136b261d47e6a15ef3539b3bcb
 Source1:	%{name}.desktop
-Patch0:		%{name}-glib24.patch
-Patch1:		%{name}-gcc34.patch
 URL:		http://beast.gtk.org/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
-BuildRequires:	gtk+2-devel >=  2.2.0
+BuildRequires:	gtk+2-devel >=  2.4.0
 BuildRequires:	guile-devel >= 1.6
 BuildRequires:	libart_lgpl-devel >= 2.3.8
 BuildRequires:	libgnomecanvas-devel >= 2.0.0
@@ -51,8 +49,6 @@ Pliki nag³ówkowe dla Beast.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
 
 %build
 rm -f aclocal.m4
@@ -98,6 +94,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/mime-info/bse.*
 %{_desktopdir}/%{name}.desktop
 %{_pixmapsdir}/*.png
+%{_datadir}/mime/audio/x-bse.xml
+%{_datadir}/mime/audio/x-bsewave.xml
+%{_datadir}/mime/packages/beast.xml
+
 
 %files devel
 %defattr(644,root,root,755)
