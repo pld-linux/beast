@@ -1,24 +1,27 @@
 Summary:	BEAST (the Bedevilled Audio System)
 Summary(pl):	System d¼wiêku BEAST (Bedevilled Audio System)
 Name:		beast
-Version:	0.6.1
-Release:	0.1
+Version:	0.6.2
+Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://beast.gtk.org/beast-ftp/v0.6/%{name}-%{version}.tar.gz
-# Source0-md5:	4c09a330b174d9df2d45a94334f06ff8
+# Source0-md5:	fb86207ba14069956d39a99c62da5bd7
 Source1:	%{name}.desktop
 Patch0:		%{name}-glib24.patch
 Patch1:		%{name}-gcc34.patch
 URL:		http://beast.gtk.org/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
 BuildRequires:	gtk+2-devel >=  2.2.0
 BuildRequires:	guile-devel >= 1.6
+BuildRequires:	libart_lgpl-devel >= 2.3.8
 BuildRequires:	libgnomecanvas-devel >= 2.0.0
 BuildRequires:	libmad-devel >= 0.14.2
 BuildRequires:	libtool
 BuildRequires:	libvorbis-devel >= 1.0
+BuildRequires:	perl-base
+BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -38,7 +41,7 @@ rzeczywistym oraz umo¿liwienia komponowania piosenek.
 Summary:	Header files for Beast
 Summary(pl):	Pliki nag³ówkowe dla Beast
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Header files for Beast.
