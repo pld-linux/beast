@@ -1,0 +1,164 @@
+diff -urN beast-0.5.1.orig/Makefile.am beast-0.5.1/Makefile.am
+--- beast-0.5.1.orig/Makefile.am	Mon Apr 14 09:12:39 2003
++++ beast-0.5.1/Makefile.am	Mon Apr 14 09:16:49 2003
+@@ -40,13 +40,13 @@
+ # always built PKG_paths.h and create links
+ stamp-h: PKG_paths.h
+ 
+-CLEANFILES += PKG_paths.h
++CLEANFILES = PKG_paths.h
+ 
+ pkgconfigdir = $(libdir)/pkgconfig
+ pkgconfig_DATA = sfi.pc bse.pc
+ $(pkgconfig_DATA): config.status
+ 
+-EXTRA_DIST += $(strip	\
++EXTRA_DIST = $(strip	\
+ 	TODO		\
+ 	COPYING.GPL	\
+ 	COPYING.LGPL	\
+diff -urN beast-0.5.1.orig/beast-gtk/Makefile.am beast-0.5.1/beast-gtk/Makefile.am
+--- beast-0.5.1.orig/beast-gtk/Makefile.am	Mon Apr 14 09:12:39 2003
++++ beast-0.5.1/beast-gtk/Makefile.am	Mon Apr 14 09:14:32 2003
+@@ -91,7 +91,7 @@
+ 
+ 
+ # gen-sources
+-CLEANFILES += xgen-beac xgen-beac xgen-bgth xgen-bgtc xgen-belc xgen-bmh xgen-bmc xgen-bdkd
++CLEANFILES = xgen-beac xgen-beac xgen-bgth xgen-bgtc xgen-belc xgen-bmh xgen-bmc xgen-bdkd
+ bstenum_arrays.c: $(beast_headers)
+ 	(cd ${srcdir} \
+ 	&& $(GLIB_MKENUMS) \
+@@ -149,7 +149,7 @@
+ 	     --tmplkey '  { CKEY (%s),\t\t"Name",\n  BST_STOCK_,\t\t\t\t"",\n    "tip", NULL,\n  },\n' \
+ 	     --needkeys $(beast_sources) $(beast_extra_sources)
+ 	touch $@
+-beast_DEPENDENCIES += stamp-ckeycheck
++beast_DEPENDENCIES = stamp-ckeycheck
+ 
+ debug_key_globs = $(top_srcdir)/beast-gtk/*.[hc] $(top_srcdir)/bse/*.[hc] $(top_srcdir)/sfi/*.[hc]
+ bstdebugkeys.defs: @DVLBUILD@ scankeys $(debug_key_globs)
+@@ -184,8 +184,8 @@
+ # extra deps
+ $(beast_SOURCES) $(bststest_SOURCES) $(tsmview_SOURCES): bstgentypes.h
+ 
+-EXTRA_DIST += $(beast_headers) $(beast_extra_sources) $(beast_extra_files)
+-MAINTAINERCLEANFILES += $(beast_built_sources)
++EXTRA_DIST = $(beast_headers) $(beast_extra_sources) $(beast_extra_files)
++MAINTAINERCLEANFILES = $(beast_built_sources)
+ EXTRA_DIST += $(beast_built_sources)
+ 
+ #
+diff -urN beast-0.5.1.orig/beast-gtk/gxk/Makefile.am beast-0.5.1/beast-gtk/gxk/Makefile.am
+--- beast-0.5.1.orig/beast-gtk/gxk/Makefile.am	Mon Apr 14 09:12:39 2003
++++ beast-0.5.1/beast-gtk/gxk/Makefile.am	Mon Apr 14 09:14:32 2003
+@@ -90,6 +90,6 @@
+ gxktest_SOURCES = gxktest.c
+ gxktest_LDADD = $(progs_LDADD)
+ 
+-EXTRA_DIST += $(gxk_headers) $(gxk_extra_sources) $(gxk_built_sources)
+-MAINTAINERCLEANFILES += $(gxk_built_sources) $(stamp_files)
+-CLEANFILES += $(temp_files)
++EXTRA_DIST = $(gxk_headers) $(gxk_extra_sources) $(gxk_built_sources)
++MAINTAINERCLEANFILES = $(gxk_built_sources) $(stamp_files)
++CLEANFILES = $(temp_files)
+diff -urN beast-0.5.1.orig/beast-gtk/icons/Makefile.am beast-0.5.1/beast-gtk/icons/Makefile.am
+--- beast-0.5.1.orig/beast-gtk/icons/Makefile.am	Mon Apr 14 09:12:39 2003
++++ beast-0.5.1/beast-gtk/icons/Makefile.am	Mon Apr 14 09:14:32 2003
+@@ -85,7 +85,7 @@
+ @STRIP_END@
+ 
+ gen_sources = xgen-bsgc xgen-bsgh
+-CLEANFILES += $(gen_sources) bst-stock-gen.c bst-stock-gen.h
++CLEANFILES = $(gen_sources) bst-stock-gen.c bst-stock-gen.h
+ noinst_DATA = bst-stock-gen.c bst-stock-gen.h
+ EXTRA_DIST  = $(SRC_IMAGES) $(filter-out STOCK_%, $(STOCK_IMAGE_DEFS))
+ 
+diff -urN beast-0.5.1.orig/beast-gtk/images/Makefile.am beast-0.5.1/beast-gtk/images/Makefile.am
+--- beast-0.5.1.orig/beast-gtk/images/Makefile.am	Mon Apr 14 09:12:39 2003
++++ beast-0.5.1/beast-gtk/images/Makefile.am	Mon Apr 14 09:14:32 2003
+@@ -15,10 +15,10 @@
+ 
+ imagesdir = ${beastimagesdir}
+ images_DATA = ${public_images}
+-EXTRA_DIST += ${public_images} ${private_images}
++EXTRA_DIST = ${public_images} ${private_images}
+ 
+ gen_sources           = xgen-bstih
+-CLEANFILES           += $(gen_sources) beast-images.h
++CLEANFILES            = $(gen_sources) beast-images.h
+ noinst_DATA           = beast-images.h
+ 
+ beast-images.h:	Makefile ${public_images}
+diff -urN beast-0.5.1.orig/bse/Makefile.am beast-0.5.1/bse/Makefile.am
+--- beast-0.5.1.orig/bse/Makefile.am	Mon Apr 14 09:12:39 2003
++++ beast-0.5.1/bse/Makefile.am	Mon Apr 14 09:14:32 2003
+@@ -179,9 +179,9 @@
+ bse_h_sources = $(bse_private_h_sources) $(bse_public_h_sources) $(bse_built_h_sources)
+ libbseinclude_HEADERS = $(bse_public_h_sources) $(bse_built_h_sources)
+ libbse_la_SOURCES = $(bse_c_sources) $(bse_builtin_c_sources)
+-MAINTAINERCLEANFILES += $(bse_built_h_sources) $(bse_built_c_sources)
+-EXTRA_HEADERS +=
+-EXTRA_DIST += $(bse_private_h_sources) $(bse_proc_sources)
++MAINTAINERCLEANFILES = $(bse_built_h_sources) $(bse_built_c_sources)
++EXTRA_HEADERS =
++EXTRA_DIST = $(bse_private_h_sources) $(bse_proc_sources)
+ EXTRA_DIST += $(bse_built_c_sources) $(bse_built_h_sources) $(bse_extra_sources)
+ GLIB_MKENUMS = glib-mkenums
+ SFIDL = ../sfi/sfidl	# WATCH OUT: $(SFIDL) works only for srcdir==builddir with cd $(srcdir)
+@@ -193,7 +193,7 @@
+ # setup autogeneration dependancies
+ tmp_files = xgen-sbgth xgen-bgtc xgen-bgtac xgen-sbeac xgen-belc xgen-bbec xgen-bbac \
+ 	    xgen-bnac xgen-bmx xgen-bmh xgen-bmc xgen-bgasi
+-CLEANFILES += $(tmp_files) @DVLBUILD@ $(bse_proc_gen_sources)
++CLEANFILES = $(tmp_files) @DVLBUILD@ $(bse_proc_gen_sources)
+ $(OBJECTS): $(bse_built_h_sources)
+ # piggyback generation through sideeffects, needs NOP-rule for dep-tracking, must be in srcdir
+ $(srcdir)/bsegentypes.h: @DVLBUILD@ stamp-bsegentypes.h ;
+diff -urN beast-0.5.1.orig/bse/icons/Makefile.am beast-0.5.1/bse/icons/Makefile.am
+--- beast-0.5.1.orig/bse/icons/Makefile.am	Mon Apr 14 09:12:39 2003
++++ beast-0.5.1/bse/icons/Makefile.am	Mon Apr 14 09:14:32 2003
+@@ -15,7 +15,7 @@
+ 	done \
+ 	&& echo "## Generated data ends here" >> $@
+ 
+-EXTRA_DIST += $(strip \
++EXTRA_DIST = $(strip \
+ 	$(icon_list) \
+ )
+ 
+diff -urN beast-0.5.1.orig/configure.in beast-0.5.1/configure.in
+--- beast-0.5.1.orig/configure.in	Mon Apr 14 09:12:39 2003
++++ beast-0.5.1/configure.in	Mon Apr 14 09:18:34 2003
+@@ -13,13 +13,13 @@
+ #
+ # BSE version numbers
+ #
+-AC_DIVERT_PUSH(AC_DIVERSION_NOTICE)dnl
++#AC_DIVERT_PUSH(AC_DIVERSION_NOTICE)dnl
+ BSE_MAJOR_VERSION=0
+ BSE_MINOR_VERSION=5
+ BSE_MICRO_VERSION=1
+ BSE_INTERFACE_AGE=0
+ BSE_BINARY_AGE=0
+-AC_DIVERT_POP()dnl
++#AC_DIVERT_POP()dnl
+ dnl#
+ dnl# Making releases:
+ dnl#   BSE_MICRO_VERSION += 1;
+@@ -57,13 +57,13 @@
+ 
+ dnl figure debugging default, prior to $ac_help setup
+ dnl
+-AC_DIVERT_PUSH(AC_DIVERSION_NOTICE)dnl
++#AC_DIVERT_PUSH(AC_DIVERSION_NOTICE)dnl
+ if test `expr $BSE_MINOR_VERSION \% 2 \| $BSE_MAJOR_VERSION \< 1` = 1 ; then
+         debug_default=yes
+ else
+         debug_default=minimum
+ fi
+-AC_DIVERT_POP()dnl
++#AC_DIVERT_POP()dnl
+ 
+ 
+ # initialize automake, don't define PACKAGE and VERSION
