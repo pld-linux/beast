@@ -1,4 +1,5 @@
 Summary:	BEAST (the Bedevilled Audio System)
+Summary(pl):	System d¼wiêku BEAST (Bedevilled Audio System)
 Name:		beast
 Version:	0.5.1
 Release:	1
@@ -10,8 +11,9 @@ URL:		http://beast.gtk.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gtk+2-devel >=  2.0.0
-BuildRequires:	libgnomecanvas-devel >= 2.0.0
 BuildRequires:	guile-devel >= 1.4
+BuildRequires:	libgnomecanvas-devel >= 2.0.0
+BuildRequires:	libtool
 BuildRequires:	libvorbis-devel >= 1.0
 BuildRequires:	mad-devel >= 0.14.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -22,13 +24,24 @@ BSE (the Bedevilled Sound Engine). BSE is a shared library that comes
 with the necessary framework to simulate audio synthesis (modular
 synthesis) in realtime and allow for song composition.
 
+%description -l pl
+System d¼wiêku BEAST (Bedevilled Audio System) to oparty na GTK+/GNOME
+frontend dla silnika d¼wiêku BSE (Bedevilled Sound Engine). BSE to
+biblioteka wspó³dzielona, która przychodzi wraz ze szkieletem
+potrzebnym do symulacji syntezy d¼wiêku (syntezy modularnej) w czasie
+rzeczywistym oraz umo¿liwienia komponowania piosenek.
+
 %package devel
 Summary: 	Header files for Beast
-Group:		Libraries
+Summary(pl):	Pliki nag³ówkowe dla Beast
+Group:		Development/Libraries
 Requires:	%{name} = %{version}
 
 %description devel
 Header files for Beast.
+
+%description devel -l pl
+Pliki nag³ówkowe dla Beast.
 
 %prep
 %setup -q
@@ -53,23 +66,26 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post -p /sbin/ldconfig
+%post	-p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
 %dir %{_libdir}/bse
-%{_libdir}/bse/v%{version}/plugins/*.so
-%{_libdir}/lib*.so.*.*.*
+%dir %{_libdir}/bse/v%{version}
+%dir %{_libdir}/bse/v%{version}/plugins
+%attr(755,root,root) %{_libdir}/bse/v%{version}/plugins/*.so
 %{_datadir}/%{name}
 
 %files devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/*.so
+%{_libdir}/*.la
 %{_includedir}/bse
 %{_includedir}/bsw
 %{_includedir}/sfi
-%{_libdir}/*.la
-%{_libdir}/*.so
 %{_mandir}/man3/*
 %{_pkgconfigdir}/*.pc
 # do we really need this?
