@@ -39,7 +39,8 @@ rm -f aclocal.m4
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
-%configure
+%configure \
+	--enable-devdsp
 
 %{__make}
 
