@@ -21,6 +21,7 @@ BuildRequires:	libtool
 BuildRequires:	libvorbis-devel >= 1.0
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
+Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	shared-mime-info
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -70,17 +71,21 @@ install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+rm -f $RPM_BUILD_ROOT%{_libdir}/bse/v%{version}/plugins/*.la
+
 %find_lang %{name} --all-name
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post -p /sbin/ldconfig
+%post
+/sbin/ldconfig
 umask 022
 update-mime-database %{_datadir}/mime
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
 
-%postun -p /sbin/ldconfig
+%postun
+/sbin/ldconfig
 umask 022
 update-mime-database %{_datadir}/mime
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
@@ -92,7 +97,6 @@ update-mime-database %{_datadir}/mime
 %dir %{_libdir}/bse
 %dir %{_libdir}/bse/v%{version}
 %dir %{_libdir}/bse/v%{version}/plugins
-%{_mandir}/man1/*
 %attr(755,root,root) %{_libdir}/bse/v%{version}/plugins/*.so
 %{_datadir}/%{name}
 %{_datadir}/bse
@@ -103,7 +107,7 @@ update-mime-database %{_datadir}/mime
 %{_datadir}/mime/audio/x-bse.xml
 %{_datadir}/mime/audio/x-bsewave.xml
 %{_datadir}/mime/packages/beast.xml
-
+%{_mandir}/man1/*
 
 %files devel
 %defattr(644,root,root,755)
@@ -114,5 +118,3 @@ update-mime-database %{_datadir}/mime
 %{_includedir}/sfi
 %{_mandir}/man3/*
 %{_pkgconfigdir}/*.pc
-# do we really need this?
-%{_libdir}/bse/v%{version}/plugins/*.la
