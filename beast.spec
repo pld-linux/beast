@@ -34,7 +34,7 @@ potrzebnym do symulacji syntezy d¼wiêku (syntezy modularnej) w czasie
 rzeczywistym oraz umo¿liwienia komponowania piosenek.
 
 %package devel
-Summary: 	Header files for Beast
+Summary:	Header files for Beast
 Summary(pl):	Pliki nag³ówkowe dla Beast
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
