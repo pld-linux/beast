@@ -1,6 +1,6 @@
-diff -aurN beast-0.5.2-rc2.orig/Makefile.am beast-0.5.2-rc2/Makefile.am
---- beast-0.5.2-rc2.orig/Makefile.am	2003-04-04 18:06:46.000000000 +0200
-+++ beast-0.5.2-rc2/Makefile.am	2003-06-21 18:20:04.000000000 +0200
+diff -urN beast-0.5.3.orig/Makefile.am beast-0.5.3/Makefile.am
+--- beast-0.5.3.orig/Makefile.am	Wed Jun 25 10:36:45 2003
++++ beast-0.5.3/Makefile.am	Wed Jun 25 10:36:59 2003
 @@ -40,13 +40,13 @@
  # always built PKG_paths.h and create links
  stamp-h: PKG_paths.h
@@ -17,9 +17,9 @@ diff -aurN beast-0.5.2-rc2.orig/Makefile.am beast-0.5.2-rc2/Makefile.am
  	TODO		\
  	COPYING.GPL	\
  	COPYING.LGPL	\
-diff -aurN beast-0.5.2-rc2.orig/beast-gtk/Makefile.am beast-0.5.2-rc2/beast-gtk/Makefile.am
---- beast-0.5.2-rc2.orig/beast-gtk/Makefile.am	2003-05-25 18:34:27.000000000 +0200
-+++ beast-0.5.2-rc2/beast-gtk/Makefile.am	2003-06-21 18:16:07.000000000 +0200
+diff -urN beast-0.5.3.orig/beast-gtk/Makefile.am beast-0.5.3/beast-gtk/Makefile.am
+--- beast-0.5.3.orig/beast-gtk/Makefile.am	Wed Jun 25 10:36:45 2003
++++ beast-0.5.3/beast-gtk/Makefile.am	Wed Jun 25 10:36:59 2003
 @@ -9,14 +9,14 @@
  # -DGTK_DISABLE_DEPRECATED -DGTK_DISABLE_COMPAT_H
  
@@ -67,9 +67,9 @@ diff -aurN beast-0.5.2-rc2.orig/beast-gtk/Makefile.am beast-0.5.2-rc2/beast-gtk/
  $(beast_sources): $(beast_built_sources)
  
  
-diff -aurN beast-0.5.2-rc2.orig/beast-gtk/gxk/Makefile.am beast-0.5.2-rc2/beast-gtk/gxk/Makefile.am
---- beast-0.5.2-rc2.orig/beast-gtk/gxk/Makefile.am	2003-03-31 12:09:33.000000000 +0200
-+++ beast-0.5.2-rc2/beast-gtk/gxk/Makefile.am	2003-06-21 18:16:26.000000000 +0200
+diff -urN beast-0.5.3.orig/beast-gtk/gxk/Makefile.am beast-0.5.3/beast-gtk/gxk/Makefile.am
+--- beast-0.5.3.orig/beast-gtk/gxk/Makefile.am	Wed Jun 25 10:36:45 2003
++++ beast-0.5.3/beast-gtk/gxk/Makefile.am	Wed Jun 25 10:36:59 2003
 @@ -7,7 +7,7 @@
  
  INCLUDES = -I$(top_srcdir) -I$(top_builddir) -I$(top_srcdir)/beast-gtk $(GXK_CFLAGS) # -I.. for <gxk/*.h> includes
@@ -88,9 +88,9 @@ diff -aurN beast-0.5.2-rc2.orig/beast-gtk/gxk/Makefile.am beast-0.5.2-rc2/beast-
  MAINTAINERCLEANFILES += $(gxk_built_sources) $(stamp_files)
 -CLEANFILES += $(temp_files)
 +CLEANFILES = $(temp_files)
-diff -aurN beast-0.5.2-rc2.orig/beast-gtk/icons/Makefile.am beast-0.5.2-rc2/beast-gtk/icons/Makefile.am
---- beast-0.5.2-rc2.orig/beast-gtk/icons/Makefile.am	2003-05-06 18:23:24.000000000 +0200
-+++ beast-0.5.2-rc2/beast-gtk/icons/Makefile.am	2003-06-21 18:16:35.000000000 +0200
+diff -urN beast-0.5.3.orig/beast-gtk/icons/Makefile.am beast-0.5.3/beast-gtk/icons/Makefile.am
+--- beast-0.5.3.orig/beast-gtk/icons/Makefile.am	Wed Jun 25 10:36:45 2003
++++ beast-0.5.3/beast-gtk/icons/Makefile.am	Wed Jun 25 10:36:59 2003
 @@ -86,7 +86,7 @@
  @STRIP_END@
  
@@ -100,9 +100,9 @@ diff -aurN beast-0.5.2-rc2.orig/beast-gtk/icons/Makefile.am beast-0.5.2-rc2/beas
  noinst_DATA = bst-stock-gen.c bst-stock-gen.h
  EXTRA_DIST  = $(SRC_IMAGES) $(filter-out STOCK_%, $(STOCK_IMAGE_DEFS))
  
-diff -aurN beast-0.5.2-rc2.orig/beast-gtk/images/Makefile.am beast-0.5.2-rc2/beast-gtk/images/Makefile.am
---- beast-0.5.2-rc2.orig/beast-gtk/images/Makefile.am	2003-04-13 17:09:13.000000000 +0200
-+++ beast-0.5.2-rc2/beast-gtk/images/Makefile.am	2003-06-21 18:16:49.000000000 +0200
+diff -urN beast-0.5.3.orig/beast-gtk/images/Makefile.am beast-0.5.3/beast-gtk/images/Makefile.am
+--- beast-0.5.3.orig/beast-gtk/images/Makefile.am	Wed Jun 25 10:36:45 2003
++++ beast-0.5.3/beast-gtk/images/Makefile.am	Wed Jun 25 10:36:59 2003
 @@ -15,10 +15,10 @@
  
  imagesdir = ${beastimagesdir}
@@ -116,9 +116,9 @@ diff -aurN beast-0.5.2-rc2.orig/beast-gtk/images/Makefile.am beast-0.5.2-rc2/bea
  noinst_DATA           = beast-images.h
  
  beast-images.h:	Makefile ${public_images}
-diff -aurN beast-0.5.2-rc2.orig/bse/Makefile.am beast-0.5.2-rc2/bse/Makefile.am
---- beast-0.5.2-rc2.orig/bse/Makefile.am	2003-06-08 17:57:29.000000000 +0200
-+++ beast-0.5.2-rc2/bse/Makefile.am	2003-06-21 18:18:01.000000000 +0200
+diff -urN beast-0.5.3.orig/bse/Makefile.am beast-0.5.3/bse/Makefile.am
+--- beast-0.5.3.orig/bse/Makefile.am	Wed Jun 25 10:36:45 2003
++++ beast-0.5.3/bse/Makefile.am	Wed Jun 25 10:36:59 2003
 @@ -18,7 +18,7 @@
  # due to automake-1.3 not featuring target specific defines,
  # the G_LOG_DOMAIN needs to be special cased, depending on
@@ -161,9 +161,9 @@ diff -aurN beast-0.5.2-rc2.orig/bse/Makefile.am beast-0.5.2-rc2/bse/Makefile.am
  noinst_DATA = bse.sfidl
  
  
-diff -aurN beast-0.5.2-rc2.orig/bse/icons/Makefile.am beast-0.5.2-rc2/bse/icons/Makefile.am
---- beast-0.5.2-rc2.orig/bse/icons/Makefile.am	2003-03-10 05:40:35.000000000 +0100
-+++ beast-0.5.2-rc2/bse/icons/Makefile.am	2003-06-21 18:17:23.000000000 +0200
+diff -urN beast-0.5.3.orig/bse/icons/Makefile.am beast-0.5.3/bse/icons/Makefile.am
+--- beast-0.5.3.orig/bse/icons/Makefile.am	Wed Jun 25 10:36:45 2003
++++ beast-0.5.3/bse/icons/Makefile.am	Wed Jun 25 10:36:59 2003
 @@ -11,11 +11,11 @@
  	cd $(srcdir) \
  	&& echo "## Generated data (by make $@)" > $@ \
@@ -178,9 +178,9 @@ diff -aurN beast-0.5.2-rc2.orig/bse/icons/Makefile.am beast-0.5.2-rc2/bse/icons/
  	$(icon_list) \
  )
  
-diff -aurN beast-0.5.2-rc2.orig/bse/tests/Makefile.am beast-0.5.2-rc2/bse/tests/Makefile.am
---- beast-0.5.2-rc2.orig/bse/tests/Makefile.am	2003-05-20 18:17:40.000000000 +0200
-+++ beast-0.5.2-rc2/bse/tests/Makefile.am	2003-06-21 18:17:34.000000000 +0200
+diff -urN beast-0.5.3.orig/bse/tests/Makefile.am beast-0.5.3/bse/tests/Makefile.am
+--- beast-0.5.3.orig/bse/tests/Makefile.am	Wed Jun 25 10:36:45 2003
++++ beast-0.5.3/bse/tests/Makefile.am	Wed Jun 25 10:36:59 2003
 @@ -5,9 +5,9 @@
  
  SUBDIRS =
@@ -200,9 +200,9 @@ diff -aurN beast-0.5.2-rc2.orig/bse/tests/Makefile.am beast-0.5.2-rc2/bse/tests/
 -EXTRA_DIST += $(strip \
 +EXTRA_DIST = $(strip \
  )
-diff -aurN beast-0.5.2-rc2.orig/bse/zintern/Makefile.am beast-0.5.2-rc2/bse/zintern/Makefile.am
---- beast-0.5.2-rc2.orig/bse/zintern/Makefile.am	2003-04-28 00:18:28.000000000 +0200
-+++ beast-0.5.2-rc2/bse/zintern/Makefile.am	2003-06-21 18:17:43.000000000 +0200
+diff -urN beast-0.5.3.orig/bse/zintern/Makefile.am beast-0.5.3/bse/zintern/Makefile.am
+--- beast-0.5.3.orig/bse/zintern/Makefile.am	Wed Jun 25 10:36:45 2003
++++ beast-0.5.3/bse/zintern/Makefile.am	Wed Jun 25 10:36:59 2003
 @@ -10,7 +10,7 @@
  )
  
@@ -212,9 +212,9 @@ diff -aurN beast-0.5.2-rc2.orig/bse/zintern/Makefile.am beast-0.5.2-rc2/bse/zint
  noinst_DATA = bse-zfile.c # bse-zfile.h
  EXTRA_DIST  = $(filter-out BSE_%, $(ZFILE_DEFS))
  
-diff -aurN beast-0.5.2-rc2.orig/bsw/Makefile.am beast-0.5.2-rc2/bsw/Makefile.am
---- beast-0.5.2-rc2.orig/bsw/Makefile.am	2003-03-10 10:03:15.000000000 +0100
-+++ beast-0.5.2-rc2/bsw/Makefile.am	2003-06-21 18:18:19.000000000 +0200
+diff -urN beast-0.5.3.orig/bsw/Makefile.am beast-0.5.3/bsw/Makefile.am
+--- beast-0.5.3.orig/bsw/Makefile.am	Wed Jun 25 10:36:45 2003
++++ beast-0.5.3/bsw/Makefile.am	Wed Jun 25 10:36:59 2003
 @@ -15,7 +15,7 @@
  # due to automake-1.3 not featuring target specific defines,
  # the G_LOG_DOMAIN needs to be special cased, depending on
@@ -254,9 +254,9 @@ diff -aurN beast-0.5.2-rc2.orig/bsw/Makefile.am beast-0.5.2-rc2/bsw/Makefile.am
  #
 -EXTRA_DIST += #	TODO
 +EXTRA_DIST = #	TODO
-diff -aurN beast-0.5.2-rc2.orig/configure.in beast-0.5.2-rc2/configure.in
---- beast-0.5.2-rc2.orig/configure.in	2003-06-20 00:23:24.000000000 +0200
-+++ beast-0.5.2-rc2/configure.in	2003-06-21 18:23:41.000000000 +0200
+diff -urN beast-0.5.3.orig/configure.in beast-0.5.3/configure.in
+--- beast-0.5.3.orig/configure.in	Wed Jun 25 10:36:45 2003
++++ beast-0.5.3/configure.in	Wed Jun 25 10:37:40 2003
 @@ -13,13 +13,13 @@
  #
  # BSE version numbers
@@ -265,7 +265,7 @@ diff -aurN beast-0.5.2-rc2.orig/configure.in beast-0.5.2-rc2/configure.in
 +#AC_DIVERT_PUSH(AC_DIVERSION_NOTICE)dnl
  BSE_MAJOR_VERSION=0
  BSE_MINOR_VERSION=5
- BSE_MICRO_VERSION=2
+ BSE_MICRO_VERSION=3
  BSE_INTERFACE_AGE=0
  BSE_BINARY_AGE=0
 -AC_DIVERT_POP()dnl
@@ -289,9 +289,9 @@ diff -aurN beast-0.5.2-rc2.orig/configure.in beast-0.5.2-rc2/configure.in
  
  
  # initialize automake, don't define PACKAGE and VERSION
-diff -aurN beast-0.5.2-rc2.orig/docs/generated/Makefile.am beast-0.5.2-rc2/docs/generated/Makefile.am
---- beast-0.5.2-rc2.orig/docs/generated/Makefile.am	2003-05-11 03:32:09.000000000 +0200
-+++ beast-0.5.2-rc2/docs/generated/Makefile.am	2003-06-21 18:18:39.000000000 +0200
+diff -urN beast-0.5.3.orig/docs/generated/Makefile.am beast-0.5.3/docs/generated/Makefile.am
+--- beast-0.5.3.orig/docs/generated/Makefile.am	Wed Jun 25 10:36:45 2003
++++ beast-0.5.3/docs/generated/Makefile.am	Wed Jun 25 10:36:59 2003
 @@ -48,7 +48,7 @@
  
  # extra dist
@@ -330,9 +330,9 @@ diff -aurN beast-0.5.2-rc2.orig/docs/generated/Makefile.am beast-0.5.2-rc2/docs/
  
  # intermediate files we don't need to keep
  .INTERMEDIATE: $(strip \
-diff -aurN beast-0.5.2-rc2.orig/plugins/Makefile.am beast-0.5.2-rc2/plugins/Makefile.am
---- beast-0.5.2-rc2.orig/plugins/Makefile.am	2003-05-10 18:14:10.000000000 +0200
-+++ beast-0.5.2-rc2/plugins/Makefile.am	2003-06-21 18:19:01.000000000 +0200
+diff -urN beast-0.5.3.orig/plugins/Makefile.am beast-0.5.3/plugins/Makefile.am
+--- beast-0.5.3.orig/plugins/Makefile.am	Wed Jun 25 10:36:45 2003
++++ beast-0.5.3/plugins/Makefile.am	Wed Jun 25 10:36:59 2003
 @@ -5,9 +5,9 @@
  
  SUBDIRS = icons . freeverb
@@ -364,9 +364,9 @@ diff -aurN beast-0.5.2-rc2.orig/plugins/Makefile.am beast-0.5.2-rc2/plugins/Make
  
  ## include generated plugin Makefile
  include Makefile.plugins
-diff -aurN beast-0.5.2-rc2.orig/plugins/freeverb/Makefile.am beast-0.5.2-rc2/plugins/freeverb/Makefile.am
---- beast-0.5.2-rc2.orig/plugins/freeverb/Makefile.am	2003-03-10 05:41:12.000000000 +0100
-+++ beast-0.5.2-rc2/plugins/freeverb/Makefile.am	2003-06-21 18:19:11.000000000 +0200
+diff -urN beast-0.5.3.orig/plugins/freeverb/Makefile.am beast-0.5.3/plugins/freeverb/Makefile.am
+--- beast-0.5.3.orig/plugins/freeverb/Makefile.am	Wed Jun 25 10:36:45 2003
++++ beast-0.5.3/plugins/freeverb/Makefile.am	Wed Jun 25 10:36:59 2003
 @@ -1,10 +1,10 @@
  # Freeverb Makefile
  #
@@ -391,9 +391,9 @@ diff -aurN beast-0.5.2-rc2.orig/plugins/freeverb/Makefile.am beast-0.5.2-rc2/plu
  	bsefreeverb.h \
  	bsefreeverbcpp.h \
  	denormals.h \
-diff -aurN beast-0.5.2-rc2.orig/plugins/icons/Makefile.am beast-0.5.2-rc2/plugins/icons/Makefile.am
---- beast-0.5.2-rc2.orig/plugins/icons/Makefile.am	2003-03-10 05:41:12.000000000 +0100
-+++ beast-0.5.2-rc2/plugins/icons/Makefile.am	2003-06-21 18:19:18.000000000 +0200
+diff -urN beast-0.5.3.orig/plugins/icons/Makefile.am beast-0.5.3/plugins/icons/Makefile.am
+--- beast-0.5.3.orig/plugins/icons/Makefile.am	Wed Jun 25 10:36:45 2003
++++ beast-0.5.3/plugins/icons/Makefile.am	Wed Jun 25 10:36:59 2003
 @@ -11,11 +11,11 @@
  	cd $(srcdir) \
  	&& echo "## Generated data (by make $@)" > $@ \
@@ -408,9 +408,9 @@ diff -aurN beast-0.5.2-rc2.orig/plugins/icons/Makefile.am beast-0.5.2-rc2/plugin
  	$(icon_list) \
  )
  
-diff -aurN beast-0.5.2-rc2.orig/sfi/Makefile.am beast-0.5.2-rc2/sfi/Makefile.am
---- beast-0.5.2-rc2.orig/sfi/Makefile.am	2003-05-20 18:24:41.000000000 +0200
-+++ beast-0.5.2-rc2/sfi/Makefile.am	2003-06-21 18:19:43.000000000 +0200
+diff -urN beast-0.5.3.orig/sfi/Makefile.am beast-0.5.3/sfi/Makefile.am
+--- beast-0.5.3.orig/sfi/Makefile.am	Wed Jun 25 10:36:45 2003
++++ beast-0.5.3/sfi/Makefile.am	Wed Jun 25 10:36:59 2003
 @@ -5,13 +5,13 @@
  
  SUBDIRS =
@@ -478,9 +478,9 @@ diff -aurN beast-0.5.2-rc2.orig/sfi/Makefile.am beast-0.5.2-rc2/sfi/Makefile.am
 -MAINTAINERCLEANFILES += $(sfi_built_sources)
 +EXTRA_DIST = $(sfi_public_headers) $(sfi_extra_sources) $(progs_extra_sources) $(sfi_built_sources)
 +MAINTAINERCLEANFILES = $(sfi_built_sources)
-diff -aurN beast-0.5.2-rc2.orig/shell/Makefile.am beast-0.5.2-rc2/shell/Makefile.am
---- beast-0.5.2-rc2.orig/shell/Makefile.am	2003-06-17 04:29:58.000000000 +0200
-+++ beast-0.5.2-rc2/shell/Makefile.am	2003-06-21 18:19:54.000000000 +0200
+diff -urN beast-0.5.3.orig/shell/Makefile.am beast-0.5.3/shell/Makefile.am
+--- beast-0.5.3.orig/shell/Makefile.am	Wed Jun 25 10:36:45 2003
++++ beast-0.5.3/shell/Makefile.am	Wed Jun 25 10:36:59 2003
 @@ -9,11 +9,11 @@
  # built sources
  #
