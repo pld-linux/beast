@@ -2,24 +2,26 @@ Summary:	BEAST (the Bedevilled Audio System)
 Summary(pl):	System d¼wiêku BEAST (Bedevilled Audio System)
 Name:		beast
 Version:	0.6.3
-Release:	1
-License:	GPL
+Release:	1.1
+License:	GPL, LGPL
 Group:		Applications
 Source0:	http://beast.gtk.org/beast-ftp/v0.6/%{name}-%{version}.tar.gz
 # Source0-md5:	84e5bb136b261d47e6a15ef3539b3bcb
-Source1:	%{name}.desktop
+Patch0:		%{name}-desktop.patch
 URL:		http://beast.gtk.org/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
-BuildRequires:	gtk+2-devel >=  2.4.0
+BuildRequires:	gtk+2-devel >= 2:2.4.11
 BuildRequires:	guile-devel >= 1.6
 BuildRequires:	libart_lgpl-devel >= 2.3.8
-BuildRequires:	libgnomecanvas-devel >= 2.0.0
+BuildRequires:	libgnomecanvas-devel >= 2.4.0
 BuildRequires:	libmad-devel >= 0.14.2
+BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	libvorbis-devel >= 1.0
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
+Requires(post,postun):	shared-mime-info
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -36,19 +38,20 @@ potrzebnym do symulacji syntezy d¼wiêku (syntezy modularnej) w czasie
 rzeczywistym oraz umo¿liwienia komponowania piosenek.
 
 %package devel
-Summary:	Header files for Beast
-Summary(pl):	Pliki nag³ówkowe dla Beast
+Summary:	Header files for BEAST
+Summary(pl):	Pliki nag³ówkowe dla BEAST
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
-Header files for Beast.
+Header files for BEAST.
 
 %description devel -l pl
-Pliki nag³ówkowe dla Beast.
+Pliki nag³ówkowe dla BEAST.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 rm -f aclocal.m4
@@ -56,7 +59,6 @@ rm -f aclocal.m4
 %{__aclocal}
 %{__autoconf}
 %configure \
-	--enable-devdsp \
 	--enable-debug=no
 
 %{__make}
@@ -68,16 +70,20 @@ install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install -c %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
-
 %find_lang %{name} --all-name
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post -p /sbin/ldconfig
+umask 022
+update-mime-database %{_datadir}/mime
+[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
 
+%postun -p /sbin/ldconfig
+umask 022
+update-mime-database %{_datadir}/mime
+[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
