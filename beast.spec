@@ -15,9 +15,9 @@ BuildRequires:	automake
 BuildRequires:	gtk+2-devel >=  2.0.0
 BuildRequires:	guile-devel >= 1.6
 BuildRequires:	libgnomecanvas-devel >= 2.0.0
+BuildRequires:	libmad-devel >= 0.14.2
 BuildRequires:	libtool
 BuildRequires:	libvorbis-devel >= 1.0
-BuildRequires:	mad-devel >= 0.14.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
