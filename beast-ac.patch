@@ -1,25 +1,56 @@
-diff -urN beast-0.5.3.orig/Makefile.am beast-0.5.3/Makefile.am
---- beast-0.5.3.orig/Makefile.am	Wed Jun 25 10:36:45 2003
-+++ beast-0.5.3/Makefile.am	Wed Jun 25 10:36:59 2003
-@@ -40,13 +40,13 @@
- # always built PKG_paths.h and create links
- stamp-h: PKG_paths.h
+diff -aurN beast-0.5.4.orig/beast-gtk/gxk/Makefile.am beast-0.5.4/beast-gtk/gxk/Makefile.am
+--- beast-0.5.4.orig/beast-gtk/gxk/Makefile.am	2003-03-31 12:09:33.000000000 +0200
++++ beast-0.5.4/beast-gtk/gxk/Makefile.am	2003-07-23 16:53:34.000000000 +0200
+@@ -7,7 +7,7 @@
  
--CLEANFILES += PKG_paths.h
-+CLEANFILES = PKG_paths.h
+ INCLUDES = -I$(top_srcdir) -I$(top_builddir) -I$(top_srcdir)/beast-gtk $(GXK_CFLAGS) # -I.. for <gxk/*.h> includes
  
- pkgconfigdir = $(libdir)/pkgconfig
- pkgconfig_DATA = sfi.pc bse.pc
- $(pkgconfig_DATA): config.status
+-DEFS += $(strip \
++DEFS = $(strip \
+ 	-DGTK_DISABLE_COMPAT_H \
+ 	-DG_LOG_DOMAIN=\"GXK\" \
+ )
+@@ -90,6 +90,6 @@
+ gxktest_SOURCES = gxktest.c
+ gxktest_LDADD = $(progs_LDADD)
  
--EXTRA_DIST += $(strip	\
-+EXTRA_DIST = $(strip	\
- 	TODO		\
- 	COPYING.GPL	\
- 	COPYING.LGPL	\
-diff -urN beast-0.5.3.orig/beast-gtk/Makefile.am beast-0.5.3/beast-gtk/Makefile.am
---- beast-0.5.3.orig/beast-gtk/Makefile.am	Wed Jun 25 10:36:45 2003
-+++ beast-0.5.3/beast-gtk/Makefile.am	Wed Jun 25 10:36:59 2003
+-EXTRA_DIST += $(gxk_headers) $(gxk_extra_sources) $(gxk_built_sources)
+-MAINTAINERCLEANFILES += $(gxk_built_sources) $(stamp_files)
+-CLEANFILES += $(temp_files)
++EXTRA_DIST = $(gxk_headers) $(gxk_extra_sources) $(gxk_built_sources)
++MAINTAINERCLEANFILES = $(gxk_built_sources) $(stamp_files)
++CLEANFILES = $(temp_files)
+diff -aurN beast-0.5.4.orig/beast-gtk/icons/Makefile.am beast-0.5.4/beast-gtk/icons/Makefile.am
+--- beast-0.5.4.orig/beast-gtk/icons/Makefile.am	2003-05-06 18:23:24.000000000 +0200
++++ beast-0.5.4/beast-gtk/icons/Makefile.am	2003-07-23 16:53:43.000000000 +0200
+@@ -86,7 +86,7 @@
+ @STRIP_END@
+ 
+ gen_sources = xgen-bsgc xgen-bsgh
+-CLEANFILES += $(gen_sources) bst-stock-gen.c bst-stock-gen.h
++CLEANFILES = $(gen_sources) bst-stock-gen.c bst-stock-gen.h
+ noinst_DATA = bst-stock-gen.c bst-stock-gen.h
+ EXTRA_DIST  = $(SRC_IMAGES) $(filter-out STOCK_%, $(STOCK_IMAGE_DEFS))
+ 
+diff -aurN beast-0.5.4.orig/beast-gtk/images/Makefile.am beast-0.5.4/beast-gtk/images/Makefile.am
+--- beast-0.5.4.orig/beast-gtk/images/Makefile.am	2003-04-13 17:09:13.000000000 +0200
++++ beast-0.5.4/beast-gtk/images/Makefile.am	2003-07-23 16:53:51.000000000 +0200
+@@ -15,10 +15,10 @@
+ 
+ imagesdir = ${beastimagesdir}
+ images_DATA = ${public_images}
+-EXTRA_DIST += ${public_images} ${private_images}
++EXTRA_DIST = ${public_images} ${private_images}
+ 
+ gen_sources           = xgen-bstih
+-CLEANFILES           += $(gen_sources) beast-images.h
++CLEANFILES           = $(gen_sources) beast-images.h
+ noinst_DATA           = beast-images.h
+ 
+ beast-images.h:	Makefile ${public_images}
+diff -aurN beast-0.5.4.orig/beast-gtk/Makefile.am beast-0.5.4/beast-gtk/Makefile.am
+--- beast-0.5.4.orig/beast-gtk/Makefile.am	2003-07-16 00:57:44.000000000 +0200
++++ beast-0.5.4/beast-gtk/Makefile.am	2003-07-23 16:53:25.000000000 +0200
 @@ -9,14 +9,14 @@
  # -DGTK_DISABLE_DEPRECATED -DGTK_DISABLE_COMPAT_H
  
@@ -38,7 +69,7 @@ diff -urN beast-0.5.3.orig/beast-gtk/Makefile.am beast-0.5.3/beast-gtk/Makefile.
  
  # link programs against BSE and other neccessary libraries
  progs_LDADD = $(strip \
-@@ -93,7 +93,7 @@
+@@ -95,7 +95,7 @@
  
  
  # gen-sources
@@ -47,7 +78,7 @@ diff -urN beast-0.5.3.orig/beast-gtk/Makefile.am beast-0.5.3/beast-gtk/Makefile.
  bstenum_arrays.c: $(beast_headers)
  	(cd ${srcdir} \
  	&& $(GLIB_MKENUMS) \
-@@ -182,15 +182,15 @@
+@@ -184,15 +184,15 @@
  # extra deps
  $(beast_SOURCES) $(bststest_SOURCES) $(tsmview_SOURCES): bstgentypes.h
  
@@ -67,58 +98,32 @@ diff -urN beast-0.5.3.orig/beast-gtk/Makefile.am beast-0.5.3/beast-gtk/Makefile.
  $(beast_sources): $(beast_built_sources)
  
  
-diff -urN beast-0.5.3.orig/beast-gtk/gxk/Makefile.am beast-0.5.3/beast-gtk/gxk/Makefile.am
---- beast-0.5.3.orig/beast-gtk/gxk/Makefile.am	Wed Jun 25 10:36:45 2003
-+++ beast-0.5.3/beast-gtk/gxk/Makefile.am	Wed Jun 25 10:36:59 2003
-@@ -7,7 +7,7 @@
+diff -aurN beast-0.5.4.orig/bse/icons/Makefile.am beast-0.5.4/bse/icons/Makefile.am
+--- beast-0.5.4.orig/bse/icons/Makefile.am	2003-03-10 05:40:35.000000000 +0100
++++ beast-0.5.4/bse/icons/Makefile.am	2003-07-23 16:54:04.000000000 +0200
+@@ -11,11 +11,11 @@
+ 	cd $(srcdir) \
+ 	&& echo "## Generated data (by make $@)" > $@ \
+ 	&& for f in $(icon_pattern) ; do \
+-	    echo "icon_list += $$f" >>$@ ; \
++	    echo "icon_list = $$f" >>$@ ; \
+ 	done \
+ 	&& echo "## Generated data ends here" >> $@
  
- INCLUDES = -I$(top_srcdir) -I$(top_builddir) -I$(top_srcdir)/beast-gtk $(GXK_CFLAGS) # -I.. for <gxk/*.h> includes
- 
--DEFS += $(strip \
-+DEFS = $(strip \
- 	-DGTK_DISABLE_COMPAT_H \
- 	-DG_LOG_DOMAIN=\"GXK\" \
+-EXTRA_DIST += $(strip \
++EXTRA_DIST = $(strip \
+ 	$(icon_list) \
  )
-@@ -90,6 +90,6 @@
- gxktest_SOURCES = gxktest.c
- gxktest_LDADD = $(progs_LDADD)
  
--EXTRA_DIST += $(gxk_headers) $(gxk_extra_sources) $(gxk_built_sources)
-+EXTRA_DIST = $(gxk_headers) $(gxk_extra_sources) $(gxk_built_sources)
- MAINTAINERCLEANFILES += $(gxk_built_sources) $(stamp_files)
--CLEANFILES += $(temp_files)
-+CLEANFILES = $(temp_files)
-diff -urN beast-0.5.3.orig/beast-gtk/icons/Makefile.am beast-0.5.3/beast-gtk/icons/Makefile.am
---- beast-0.5.3.orig/beast-gtk/icons/Makefile.am	Wed Jun 25 10:36:45 2003
-+++ beast-0.5.3/beast-gtk/icons/Makefile.am	Wed Jun 25 10:36:59 2003
-@@ -86,7 +86,7 @@
- @STRIP_END@
- 
- gen_sources = xgen-bsgc xgen-bsgh
--CLEANFILES += $(gen_sources) bst-stock-gen.c bst-stock-gen.h
-+CLEANFILES = $(gen_sources) bst-stock-gen.c bst-stock-gen.h
- noinst_DATA = bst-stock-gen.c bst-stock-gen.h
- EXTRA_DIST  = $(SRC_IMAGES) $(filter-out STOCK_%, $(STOCK_IMAGE_DEFS))
- 
-diff -urN beast-0.5.3.orig/beast-gtk/images/Makefile.am beast-0.5.3/beast-gtk/images/Makefile.am
---- beast-0.5.3.orig/beast-gtk/images/Makefile.am	Wed Jun 25 10:36:45 2003
-+++ beast-0.5.3/beast-gtk/images/Makefile.am	Wed Jun 25 10:36:59 2003
-@@ -15,10 +15,10 @@
- 
- imagesdir = ${beastimagesdir}
- images_DATA = ${public_images}
--EXTRA_DIST += ${public_images} ${private_images}
-+EXTRA_DIST = ${public_images} ${private_images}
- 
- gen_sources           = xgen-bstih
--CLEANFILES           += $(gen_sources) beast-images.h
-+CLEANFILES            = $(gen_sources) beast-images.h
- noinst_DATA           = beast-images.h
- 
- beast-images.h:	Makefile ${public_images}
-diff -urN beast-0.5.3.orig/bse/Makefile.am beast-0.5.3/bse/Makefile.am
---- beast-0.5.3.orig/bse/Makefile.am	Wed Jun 25 10:36:45 2003
-+++ beast-0.5.3/bse/Makefile.am	Wed Jun 25 10:36:59 2003
+@@ -29,4 +29,4 @@
+ ##foo_la_LDFLAGS = -module -avoid-version
+ ##foo_la_LIBADD  = $(plugin_libs)
+ ##
+-##plugin_LTLIBRARIES += foo.la
++##plugin_LTLIBRARIES = foo.la
+diff -aurN beast-0.5.4.orig/bse/Makefile.am beast-0.5.4/bse/Makefile.am
+--- beast-0.5.4.orig/bse/Makefile.am	2003-06-08 17:57:29.000000000 +0200
++++ beast-0.5.4/bse/Makefile.am	2003-07-23 16:54:26.000000000 +0200
 @@ -18,7 +18,7 @@
  # due to automake-1.3 not featuring target specific defines,
  # the G_LOG_DOMAIN needs to be special cased, depending on
@@ -161,26 +166,9 @@ diff -urN beast-0.5.3.orig/bse/Makefile.am beast-0.5.3/bse/Makefile.am
  noinst_DATA = bse.sfidl
  
  
-diff -urN beast-0.5.3.orig/bse/icons/Makefile.am beast-0.5.3/bse/icons/Makefile.am
---- beast-0.5.3.orig/bse/icons/Makefile.am	Wed Jun 25 10:36:45 2003
-+++ beast-0.5.3/bse/icons/Makefile.am	Wed Jun 25 10:36:59 2003
-@@ -11,11 +11,11 @@
- 	cd $(srcdir) \
- 	&& echo "## Generated data (by make $@)" > $@ \
- 	&& for f in $(icon_pattern) ; do \
--	    echo "icon_list += $$f" >>$@ ; \
-+	    echo "icon_list = $$f" >>$@ ; \
- 	done \
- 	&& echo "## Generated data ends here" >> $@
- 
--EXTRA_DIST += $(strip \
-+EXTRA_DIST = $(strip \
- 	$(icon_list) \
- )
- 
-diff -urN beast-0.5.3.orig/bse/tests/Makefile.am beast-0.5.3/bse/tests/Makefile.am
---- beast-0.5.3.orig/bse/tests/Makefile.am	Wed Jun 25 10:36:45 2003
-+++ beast-0.5.3/bse/tests/Makefile.am	Wed Jun 25 10:36:59 2003
+diff -aurN beast-0.5.4.orig/bse/tests/Makefile.am beast-0.5.4/bse/tests/Makefile.am
+--- beast-0.5.4.orig/bse/tests/Makefile.am	2003-05-20 18:17:40.000000000 +0200
++++ beast-0.5.4/bse/tests/Makefile.am	2003-07-23 16:54:09.000000000 +0200
 @@ -5,9 +5,9 @@
  
  SUBDIRS =
@@ -200,21 +188,21 @@ diff -urN beast-0.5.3.orig/bse/tests/Makefile.am beast-0.5.3/bse/tests/Makefile.
 -EXTRA_DIST += $(strip \
 +EXTRA_DIST = $(strip \
  )
-diff -urN beast-0.5.3.orig/bse/zintern/Makefile.am beast-0.5.3/bse/zintern/Makefile.am
---- beast-0.5.3.orig/bse/zintern/Makefile.am	Wed Jun 25 10:36:45 2003
-+++ beast-0.5.3/bse/zintern/Makefile.am	Wed Jun 25 10:36:59 2003
+diff -aurN beast-0.5.4.orig/bse/zintern/Makefile.am beast-0.5.4/bse/zintern/Makefile.am
+--- beast-0.5.4.orig/bse/zintern/Makefile.am	2003-04-28 00:18:28.000000000 +0200
++++ beast-0.5.4/bse/zintern/Makefile.am	2003-07-23 16:54:19.000000000 +0200
 @@ -10,7 +10,7 @@
  )
  
  gen_sources = xgen-bzc xgen-bzh
 -CLEANFILES += $(gen_sources) bse-zfile.c bse-zfile.h
-+CLEANFILES  = $(gen_sources) bse-zfile.c bse-zfile.h
++CLEANFILES = $(gen_sources) bse-zfile.c bse-zfile.h
  noinst_DATA = bse-zfile.c # bse-zfile.h
  EXTRA_DIST  = $(filter-out BSE_%, $(ZFILE_DEFS))
  
-diff -urN beast-0.5.3.orig/bsw/Makefile.am beast-0.5.3/bsw/Makefile.am
---- beast-0.5.3.orig/bsw/Makefile.am	Wed Jun 25 10:36:45 2003
-+++ beast-0.5.3/bsw/Makefile.am	Wed Jun 25 10:36:59 2003
+diff -aurN beast-0.5.4.orig/bsw/Makefile.am beast-0.5.4/bsw/Makefile.am
+--- beast-0.5.4.orig/bsw/Makefile.am	2003-03-10 10:03:15.000000000 +0100
++++ beast-0.5.4/bsw/Makefile.am	2003-07-23 16:54:31.000000000 +0200
 @@ -15,7 +15,7 @@
  # due to automake-1.3 not featuring target specific defines,
  # the G_LOG_DOMAIN needs to be special cased, depending on
@@ -254,9 +242,9 @@ diff -urN beast-0.5.3.orig/bsw/Makefile.am beast-0.5.3/bsw/Makefile.am
  #
 -EXTRA_DIST += #	TODO
 +EXTRA_DIST = #	TODO
-diff -urN beast-0.5.3.orig/configure.in beast-0.5.3/configure.in
---- beast-0.5.3.orig/configure.in	Wed Jun 25 10:36:45 2003
-+++ beast-0.5.3/configure.in	Wed Jun 25 10:37:40 2003
+diff -aurN beast-0.5.4.orig/configure.in beast-0.5.4/configure.in
+--- beast-0.5.4.orig/configure.in	2003-07-21 14:47:34.000000000 +0200
++++ beast-0.5.4/configure.in	2003-07-23 16:57:56.000000000 +0200
 @@ -13,13 +13,13 @@
  #
  # BSE version numbers
@@ -265,7 +253,7 @@ diff -urN beast-0.5.3.orig/configure.in beast-0.5.3/configure.in
 +#AC_DIVERT_PUSH(AC_DIVERSION_NOTICE)dnl
  BSE_MAJOR_VERSION=0
  BSE_MINOR_VERSION=5
- BSE_MICRO_VERSION=3
+ BSE_MICRO_VERSION=4
  BSE_INTERFACE_AGE=0
  BSE_BINARY_AGE=0
 -AC_DIVERT_POP()dnl
@@ -289,10 +277,10 @@ diff -urN beast-0.5.3.orig/configure.in beast-0.5.3/configure.in
  
  
  # initialize automake, don't define PACKAGE and VERSION
-diff -urN beast-0.5.3.orig/docs/generated/Makefile.am beast-0.5.3/docs/generated/Makefile.am
---- beast-0.5.3.orig/docs/generated/Makefile.am	Wed Jun 25 10:36:45 2003
-+++ beast-0.5.3/docs/generated/Makefile.am	Wed Jun 25 10:36:59 2003
-@@ -48,7 +48,7 @@
+diff -aurN beast-0.5.4.orig/docs/generated/Makefile.am beast-0.5.4/docs/generated/Makefile.am
+--- beast-0.5.4.orig/docs/generated/Makefile.am	2003-07-11 02:20:01.000000000 +0200
++++ beast-0.5.4/docs/generated/Makefile.am	2003-07-23 16:54:40.000000000 +0200
+@@ -49,7 +49,7 @@
  
  # extra dist
  build_tools = scandocs.pl
@@ -301,7 +289,7 @@ diff -urN beast-0.5.3.orig/docs/generated/Makefile.am beast-0.5.3/docs/generated
  
  #
  # reference docu generation
-@@ -173,8 +173,8 @@
+@@ -175,8 +175,8 @@
  	$(distdocs)					\
  )
  endif
@@ -312,7 +300,7 @@ diff -urN beast-0.5.3.orig/docs/generated/Makefile.am beast-0.5.3/docs/generated
  
  #
  # website generation
-@@ -229,7 +229,7 @@
+@@ -231,7 +231,7 @@
  	tar zxpf  beast-site-nav.tar.gz  -C $(BEAST_PREVIEW)
  site-update: site-update-con
  site-upgrade: site-update-con site-update-img site-update-nav
@@ -321,7 +309,7 @@ diff -urN beast-0.5.3.orig/docs/generated/Makefile.am beast-0.5.3/docs/generated
  
  
  #
-@@ -247,7 +247,7 @@
+@@ -249,7 +249,7 @@
  	  xmllint --noout --loaddtd --valid $$i ; \
  	done
  
@@ -330,9 +318,78 @@ diff -urN beast-0.5.3.orig/docs/generated/Makefile.am beast-0.5.3/docs/generated
  
  # intermediate files we don't need to keep
  .INTERMEDIATE: $(strip \
-diff -urN beast-0.5.3.orig/plugins/Makefile.am beast-0.5.3/plugins/Makefile.am
---- beast-0.5.3.orig/plugins/Makefile.am	Wed Jun 25 10:36:45 2003
-+++ beast-0.5.3/plugins/Makefile.am	Wed Jun 25 10:36:59 2003
+diff -aurN beast-0.5.4.orig/Makefile.am beast-0.5.4/Makefile.am
+--- beast-0.5.4.orig/Makefile.am	2003-04-04 18:06:46.000000000 +0200
++++ beast-0.5.4/Makefile.am	2003-07-23 16:53:10.000000000 +0200
+@@ -40,13 +40,13 @@
+ # always built PKG_paths.h and create links
+ stamp-h: PKG_paths.h
+ 
+-CLEANFILES += PKG_paths.h
++CLEANFILES = PKG_paths.h
+ 
+ pkgconfigdir = $(libdir)/pkgconfig
+ pkgconfig_DATA = sfi.pc bse.pc
+ $(pkgconfig_DATA): config.status
+ 
+-EXTRA_DIST += $(strip	\
++EXTRA_DIST = $(strip	\
+ 	TODO		\
+ 	COPYING.GPL	\
+ 	COPYING.LGPL	\
+diff -aurN beast-0.5.4.orig/plugins/freeverb/Makefile.am beast-0.5.4/plugins/freeverb/Makefile.am
+--- beast-0.5.4.orig/plugins/freeverb/Makefile.am	2003-03-10 05:41:12.000000000 +0100
++++ beast-0.5.4/plugins/freeverb/Makefile.am	2003-07-23 16:54:55.000000000 +0200
+@@ -1,10 +1,10 @@
+ # Freeverb Makefile
+ #
+ 
+-CFLAGS   += $(EXTRA_CFLAGS)
+-CPPFLAGS += $(EXTRA_CXXFLAGS)
+-INCLUDES += -I$(top_srcdir) -I. $(BSE_CFLAGS) -DG_LOG_DOMAIN=BSE_PLUGIN_NAME
+-INCLUDES += -DBSE_PLUGIN_FALLBACK="\"$(strip $(basename $(<F)))\""
++CFLAGS   = $(EXTRA_CFLAGS)
++CPPFLAGS = $(EXTRA_CXXFLAGS)
++INCLUDES = -I$(top_srcdir) -I. $(BSE_CFLAGS) -DG_LOG_DOMAIN=BSE_PLUGIN_NAME
++INCLUDES = -DBSE_PLUGIN_FALLBACK="\"$(strip $(basename $(<F)))\""
+ 
+ # install plugins under:
+ plugindir = $(bseplugindir)
+@@ -18,7 +18,7 @@
+ 
+ plugin_LTLIBRARIES = freeverb.la
+ 
+-EXTRA_DIST += $(strip \
++EXTRA_DIST = $(strip \
+ 	bsefreeverb.h \
+ 	bsefreeverbcpp.h \
+ 	denormals.h \
+diff -aurN beast-0.5.4.orig/plugins/icons/Makefile.am beast-0.5.4/plugins/icons/Makefile.am
+--- beast-0.5.4.orig/plugins/icons/Makefile.am	2003-03-10 05:41:12.000000000 +0100
++++ beast-0.5.4/plugins/icons/Makefile.am	2003-07-23 16:55:05.000000000 +0200
+@@ -11,11 +11,11 @@
+ 	cd $(srcdir) \
+ 	&& echo "## Generated data (by make $@)" > $@ \
+ 	&& for f in $(icon_pattern) ; do \
+-	    echo "icon_list += $$f" >>$@ ; \
++	    echo "icon_list = $$f" >>$@ ; \
+ 	done \
+ 	&& echo "## Generated data ends here" >> $@
+ 
+-EXTRA_DIST += $(strip \
++EXTRA_DIST = $(strip \
+ 	$(icon_list) \
+ )
+ 
+@@ -29,4 +29,4 @@
+ ##foo_la_LDFLAGS = -module -avoid-version
+ ##foo_la_LIBADD  = $(plugin_libs)
+ ##
+-##plugin_LTLIBRARIES += foo.la
++##plugin_LTLIBRARIES = foo.la
+diff -aurN beast-0.5.4.orig/plugins/Makefile.am beast-0.5.4/plugins/Makefile.am
+--- beast-0.5.4.orig/plugins/Makefile.am	2003-07-18 14:24:41.000000000 +0200
++++ beast-0.5.4/plugins/Makefile.am	2003-07-23 16:55:12.000000000 +0200
 @@ -5,9 +5,9 @@
  
  SUBDIRS = icons . freeverb
@@ -364,53 +421,23 @@ diff -urN beast-0.5.3.orig/plugins/Makefile.am beast-0.5.3/plugins/Makefile.am
  
  ## include generated plugin Makefile
  include Makefile.plugins
-diff -urN beast-0.5.3.orig/plugins/freeverb/Makefile.am beast-0.5.3/plugins/freeverb/Makefile.am
---- beast-0.5.3.orig/plugins/freeverb/Makefile.am	Wed Jun 25 10:36:45 2003
-+++ beast-0.5.3/plugins/freeverb/Makefile.am	Wed Jun 25 10:36:59 2003
-@@ -1,10 +1,10 @@
- # Freeverb Makefile
- #
- 
--CFLAGS   += $(EXTRA_CFLAGS)
--CPPFLAGS += $(EXTRA_CXXFLAGS)
--INCLUDES += -I$(top_srcdir) -I. $(BSE_CFLAGS) -DG_LOG_DOMAIN=BSE_PLUGIN_NAME
--INCLUDES += -DBSE_PLUGIN_FALLBACK="\"$(strip $(basename $(<F)))\""
-+CFLAGS   = $(EXTRA_CFLAGS)
-+CPPFLAGS = $(EXTRA_CXXFLAGS)
-+INCLUDES = -I$(top_srcdir) -I. $(BSE_CFLAGS) -DG_LOG_DOMAIN=BSE_PLUGIN_NAME
-+INCLUDES = -DBSE_PLUGIN_FALLBACK="\"$(strip $(basename $(<F)))\""
- 
- # install plugins under:
- plugindir = $(bseplugindir)
-@@ -18,7 +18,7 @@
- 
- plugin_LTLIBRARIES = freeverb.la
- 
--EXTRA_DIST += $(strip \
-+EXTRA_DIST = $(strip \
- 	bsefreeverb.h \
- 	bsefreeverbcpp.h \
- 	denormals.h \
-diff -urN beast-0.5.3.orig/plugins/icons/Makefile.am beast-0.5.3/plugins/icons/Makefile.am
---- beast-0.5.3.orig/plugins/icons/Makefile.am	Wed Jun 25 10:36:45 2003
-+++ beast-0.5.3/plugins/icons/Makefile.am	Wed Jun 25 10:36:59 2003
-@@ -11,11 +11,11 @@
- 	cd $(srcdir) \
- 	&& echo "## Generated data (by make $@)" > $@ \
- 	&& for f in $(icon_pattern) ; do \
--	    echo "icon_list += $$f" >>$@ ; \
-+	    echo "icon_list = $$f" >>$@ ; \
- 	done \
- 	&& echo "## Generated data ends here" >> $@
- 
--EXTRA_DIST += $(strip \
-+EXTRA_DIST = $(strip \
- 	$(icon_list) \
- )
- 
-diff -urN beast-0.5.3.orig/sfi/Makefile.am beast-0.5.3/sfi/Makefile.am
---- beast-0.5.3.orig/sfi/Makefile.am	Wed Jun 25 10:36:45 2003
-+++ beast-0.5.3/sfi/Makefile.am	Wed Jun 25 10:36:59 2003
+@@ -83,10 +83,10 @@
+ ## files in this directory, e.g. it'd list a given foo.c as:
+ ##
+ ##foo.enums: foo.h
+-##plugins_built_sources += foo.enums
++##plugins_built_sources = foo.enums
+ ##foo_la_SOURCES = foo.c
+ ##foo_la_LDFLAGS = -module -avoid-version
+ ##foo_la_LIBADD  = $(plugin_libs)
+-##EXTRA_HEADERS += foo.h
++##EXTRA_HEADERS = foo.h
+ ##
+-##plugin_LTLIBRARIES += foo.la
++##plugin_LTLIBRARIES = foo.la
+diff -aurN beast-0.5.4.orig/sfi/Makefile.am beast-0.5.4/sfi/Makefile.am
+--- beast-0.5.4.orig/sfi/Makefile.am	2003-07-05 02:46:17.000000000 +0200
++++ beast-0.5.4/sfi/Makefile.am	2003-07-23 16:55:20.000000000 +0200
 @@ -5,13 +5,13 @@
  
  SUBDIRS =
@@ -478,9 +505,9 @@ diff -urN beast-0.5.3.orig/sfi/Makefile.am beast-0.5.3/sfi/Makefile.am
 -MAINTAINERCLEANFILES += $(sfi_built_sources)
 +EXTRA_DIST = $(sfi_public_headers) $(sfi_extra_sources) $(progs_extra_sources) $(sfi_built_sources)
 +MAINTAINERCLEANFILES = $(sfi_built_sources)
-diff -urN beast-0.5.3.orig/shell/Makefile.am beast-0.5.3/shell/Makefile.am
---- beast-0.5.3.orig/shell/Makefile.am	Wed Jun 25 10:36:45 2003
-+++ beast-0.5.3/shell/Makefile.am	Wed Jun 25 10:36:59 2003
+diff -aurN beast-0.5.4.orig/shell/Makefile.am beast-0.5.4/shell/Makefile.am
+--- beast-0.5.4.orig/shell/Makefile.am	2003-06-17 04:29:58.000000000 +0200
++++ beast-0.5.4/shell/Makefile.am	2003-07-23 16:55:27.000000000 +0200
 @@ -9,11 +9,11 @@
  # built sources
  #
