@@ -2,7 +2,7 @@ Summary:	BEAST (the Bedevilled Audio System)
 Summary(pl):	System d¼wiêku BEAST (Bedevilled Audio System)
 Name:		beast
 Version:	0.5.2
-Release:	0.1
+Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://beast.gtk.org/beast-ftp/v0.5/%{name}-%{version}.tar.gz
@@ -12,7 +12,7 @@ URL:		http://beast.gtk.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gtk+2-devel >=  2.0.0
-BuildRequires:	guile-devel >= 1.4
+BuildRequires:	guile-devel >= 1.6
 BuildRequires:	libgnomecanvas-devel >= 2.0.0
 BuildRequires:	libtool
 BuildRequires:	libvorbis-devel >= 1.0
