@@ -1,0 +1,37 @@
+diff -urN aa/beast-0.6.1/acbeast.m4 beast-0.6.1/acbeast.m4
+--- aa/beast-0.6.1/acbeast.m4	2003-09-08 02:04:33.000000000 +0200
++++ beast-0.6.1/acbeast.m4	2004-07-03 14:38:10.933404448 +0200
+@@ -289,7 +289,6 @@
+ 	
+ 		dnl Warnings.
+ 		MC_EVAR_ADD(CXXFLAGS, -Wall, -Wall)
+-		MC_EVAR_ADD(CXXFLAGS, -Wmissing-prototypes, -Wmissing-prototypes)
+ 		MC_EVAR_ADD(CXXFLAGS, -Wno-cast-qual, -Wno-cast-qual)
+ 		dnl MC_EVAR_ADD(CXXFLAGS, -Winline, -Winline)
+ 
+diff -urN aa/beast-0.6.1/bse/bsecxxutils.h beast-0.6.1/bse/bsecxxutils.h
+--- aa/beast-0.6.1/bse/bsecxxutils.h	2004-01-27 16:38:45.000000000 +0100
++++ beast-0.6.1/bse/bsecxxutils.h	2004-07-03 14:36:27.313157120 +0200
+@@ -48,8 +48,8 @@
+ 
+ /* --- template errors --- */
+ namespace TEMPLATE_ERROR {
+-template<typename What, typename Reason> void invalid_type () { TEMPLATE_ERROR::abort; }
+-template<typename TYPE> void invalid_argument_type () { TEMPLATE_ERROR::abort; }
++template<typename What, typename Reason> void invalid_type () { abort; }
++template<typename TYPE> void invalid_argument_type () { abort; }
+ }
+ 
+ /* --- generally useful templates --- */
+diff -urN aa/beast-0.6.1/sfi/sfidl-parser.h beast-0.6.1/sfi/sfidl-parser.h
+--- aa/beast-0.6.1/sfi/sfidl-parser.h	2004-02-27 06:27:05.000000000 +0100
++++ beast-0.6.1/sfi/sfidl-parser.h	2004-07-03 14:31:31.414140608 +0200
+@@ -36,7 +36,7 @@
+ public:
+   const Value& get(const Key& k) const {
+     typename std::map<Key,Value>::const_iterator i = find(k);
+-    if (i != end())
++    if (i != std::map<Key,Value>::end())
+       return i->second;
+     else
+       return default_value;
