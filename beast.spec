@@ -6,6 +6,7 @@ Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://beast.gtk.org/beast-ftp/v0.5/%{name}-%{version}.tar.gz
+# Source0-md5:	9406f2b0e51a470a89563fbc367d1fd8
 Patch0:		%{name}-ac.patch
 URL:		http://beast.gtk.org/
 BuildRequires:	autoconf
