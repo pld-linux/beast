@@ -1,12 +1,13 @@
 Summary:	BEAST (the Bedevilled Audio System)
 Summary(pl):	System d¼wiêku BEAST (Bedevilled Audio System)
 Name:		beast
-Version:	0.5.3
+Version:	0.5.4
 Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://beast.gtk.org/beast-ftp/v0.5/%{name}-%{version}.tar.gz
-# Source0-md5:	68d1139ff42e7c79c63411e32fd1a51b
+# Source0-md5:	ca6db9d452b139f5a4a6fc6a8012dd6f
+Source1:	%{name}.desktop
 Patch0:		%{name}-ac.patch
 URL:		http://beast.gtk.org/
 BuildRequires:	autoconf
@@ -61,9 +62,13 @@ rm -f aclocal.m4
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+install -c beast-gtk/images/beast.png $RPM_BUILD_ROOT%{_pixmapsdir}
+install -c %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -80,6 +85,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/bse/v%{version}/plugins
 %attr(755,root,root) %{_libdir}/bse/v%{version}/plugins/*.so
 %{_datadir}/%{name}
+%{_desktopdir}/%{name}.desktop
+%{_pixmapsdir}/%{name}.png
 
 %files devel
 %defattr(644,root,root,755)
