@@ -1,12 +1,12 @@
 Summary:	BEAST (the Bedevilled Audio System)
 Summary(pl):	System d¼wiêku BEAST (Bedevilled Audio System)
 Name:		beast
-Version:	0.5.1
-Release:	1
+Version:	0.5.2
+Release:	0.1
 License:	GPL
 Group:		Applications
 Source0:	http://beast.gtk.org/beast-ftp/v0.5/%{name}-%{version}.tar.gz
-# Source0-md5:	9406f2b0e51a470a89563fbc367d1fd8
+# Source0-md5:	2f1aa0f0a5f1fe7f43dfa8532a0d85f5
 Patch0:		%{name}-ac.patch
 URL:		http://beast.gtk.org/
 BuildRequires:	autoconf
@@ -54,7 +54,8 @@ rm -f aclocal.m4
 %{__aclocal}
 %{__autoconf}
 %configure \
-	--enable-devdsp
+	--enable-devdsp \
+	--enable-debug=no
 
 %{__make}
 
