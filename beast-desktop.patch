@@ -1,0 +1,10 @@
+diff -aurN beast-0.6.3.orig/data/beast.desktop.in beast-0.6.3/data/beast.desktop.in
+--- beast-0.6.3.orig/data/beast.desktop.in	2004-09-13 15:16:52.000000000 +0200
++++ beast-0.6.3/data/beast.desktop.in	2004-11-23 22:34:38.431775048 +0100
+@@ -8,5 +8,5 @@
+ TryExec=beast
+ Exec=beast
+ Terminal=false
+-Categories=GTK;GNOME;Application;AudioVideo;AudioVideoEditing;Music;Player;
++Categories=GTK;GNOME;Audio;
+ MimeType=audio/x-bse;audio/x-bsewave;
