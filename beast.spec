@@ -2,7 +2,7 @@ Summary:	BEAST (the Bedevilled Audio System)
 Summary(pl):	System d¼wiêku BEAST (Bedevilled Audio System)
 Name:		beast
 Version:	0.6.2
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications
 Source0:	http://beast.gtk.org/beast-ftp/v0.6/%{name}-%{version}.tar.gz
