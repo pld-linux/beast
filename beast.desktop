@@ -8,5 +8,5 @@ Exec=/usr/bin/beast
 Icon=beast.png
 Terminal=false
 Type=Application
-Categories=Application;AudioVideo;
+Categories=GTK;GNOME;Audio;
 # vi: encoding=utf-8
