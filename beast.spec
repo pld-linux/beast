@@ -9,6 +9,7 @@ Source0:	http://beast.gtk.org/beast-ftp/v0.6/%{name}-%{version}.tar.gz
 # Source0-md5:	4c09a330b174d9df2d45a94334f06ff8
 Source1:	%{name}.desktop
 Patch0:		%{name}-glib24.patch
+Patch1:		%{name}-gcc34.patch
 URL:		http://beast.gtk.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -48,6 +49,7 @@ Pliki nag³ówkowe dla Beast.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 rm -f aclocal.m4
