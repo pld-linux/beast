@@ -81,7 +81,7 @@ rm -rf $RPM_BUILD_ROOT
 %post
 /sbin/ldconfig
 umask 022
-update-mime-database %{_datadir}/mime
+update-mime-database %{_datadir}/mime ||:
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
 
 %postun
