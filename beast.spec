@@ -1,12 +1,12 @@
 Summary:	BEAST (the Bedevilled Audio System)
 Summary(pl):	System d¼wiêku BEAST (Bedevilled Audio System)
 Name:		beast
-Version:	0.6.3
-Release:	1.1
+Version:	0.6.6
+Release:	1
 License:	GPL, LGPL
 Group:		Applications
 Source0:	http://beast.gtk.org/beast-ftp/v0.6/%{name}-%{version}.tar.gz
-# Source0-md5:	84e5bb136b261d47e6a15ef3539b3bcb
+# Source0-md5:	b79337930476c7a19f211b91857c4b4c
 Patch0:		%{name}-desktop.patch
 URL:		http://beast.gtk.org/
 BuildRequires:	autoconf >= 2.57
@@ -114,7 +114,6 @@ update-mime-database %{_datadir}/mime
 %attr(755,root,root) %{_libdir}/*.so
 %{_libdir}/*.la
 %{_includedir}/bse
-%{_includedir}/bsw
 %{_includedir}/sfi
 %{_mandir}/man3/*
 %{_pkgconfigdir}/*.pc
