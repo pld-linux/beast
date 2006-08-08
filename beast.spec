@@ -52,7 +52,7 @@ Pliki nag³ówkowe dla BEAST.
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
 
 %build
 rm -f aclocal.m4
