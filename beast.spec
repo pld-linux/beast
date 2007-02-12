@@ -1,5 +1,5 @@
 Summary:	BEAST (the Bedevilled Audio System)
-Summary(pl.UTF-8):   System dźwięku BEAST (Bedevilled Audio System)
+Summary(pl.UTF-8):	System dźwięku BEAST (Bedevilled Audio System)
 Name:		beast
 Version:	0.6.6
 Release:	1
@@ -40,7 +40,7 @@ rzeczywistym oraz umożliwienia komponowania piosenek.
 
 %package devel
 Summary:	Header files for BEAST
-Summary(pl.UTF-8):   Pliki nagłówkowe dla BEAST
+Summary(pl.UTF-8):	Pliki nagłówkowe dla BEAST
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
