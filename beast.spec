@@ -1,5 +1,5 @@
 Summary:	BEAST (the Bedevilled Audio System)
-Summary(pl):	System d¼wiêku BEAST (Bedevilled Audio System)
+Summary(pl.UTF-8):   System dÅºwiÄ™ku BEAST (Bedevilled Audio System)
 Name:		beast
 Version:	0.6.6
 Release:	1
@@ -31,24 +31,24 @@ BSE (the Bedevilled Sound Engine). BSE is a shared library that comes
 with the necessary framework to simulate audio synthesis (modular
 synthesis) in realtime and allow for song composition.
 
-%description -l pl
-System d¼wiêku BEAST (Bedevilled Audio System) to oparty na GTK+/GNOME
-frontend dla silnika d¼wiêku BSE (Bedevilled Sound Engine). BSE to
-biblioteka wspó³dzielona, która przychodzi wraz ze szkieletem
-potrzebnym do symulacji syntezy d¼wiêku (syntezy modularnej) w czasie
-rzeczywistym oraz umo¿liwienia komponowania piosenek.
+%description -l pl.UTF-8
+System dÅºwiÄ™ku BEAST (Bedevilled Audio System) to oparty na GTK+/GNOME
+frontend dla silnika dÅºwiÄ™ku BSE (Bedevilled Sound Engine). BSE to
+biblioteka wspÃ³Å‚dzielona, ktÃ³ra przychodzi wraz ze szkieletem
+potrzebnym do symulacji syntezy dÅºwiÄ™ku (syntezy modularnej) w czasie
+rzeczywistym oraz umoÅ¼liwienia komponowania piosenek.
 
 %package devel
 Summary:	Header files for BEAST
-Summary(pl):	Pliki nag³ówkowe dla BEAST
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe dla BEAST
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Header files for BEAST.
 
-%description devel -l pl
-Pliki nag³ówkowe dla BEAST.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe dla BEAST.
 
 %prep
 %setup -q
