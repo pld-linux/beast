@@ -1,0 +1,292 @@
+--- beast-0.7.4/configure.in.orig	2011-04-09 00:20:56.000000000 +0200
++++ beast-0.7.4/configure.in	2012-04-20 22:01:31.005986007 +0200
+@@ -421,12 +421,14 @@
+ 	GUILE_VERSION=`$GUILE_CONFIG info guileversion`
+ 	GUILE_CFLAGS=`$GUILE_CONFIG compile`
+ 	GUILE_LDFLAGS=`$GUILE_CONFIG link`
++	oldCPPFLAGS="$CPPFLAGS"
++	CPPFLAGS="$CPPFLAGS $GUILE_CFLAGS"
+ 	MC_CHECK_VERSION($GUILE_VERSION, $REQUIRED_VERSION, [guile_tests=`expr $guile_tests + 1`])
+ 	dnl # check headers seperately, since some distributions ship on-devel guile packages with guile-config
+-	AC_CHECK_HEADER(guile/gh.h, guile_tests=`expr $guile_tests + 1`)
+-	AC_CHECK_HEADER(libguile/properties.h, guile_tests=`expr $guile_tests + 1`) dnl # guile-1.6 headerfile
++	AC_CHECK_HEADER(libguile.h, guile_tests=`expr $guile_tests + 1`)
++	CPPFLAGS="$oldCPPFLAGS"
+     fi
+-    if test $guile_tests = 4 ; then
++    if test $guile_tests = 3 ; then
+ 	BSESCM_CFLAGS="$GUILE_CFLAGS $BSESCM_CFLAGS"
+ 	BSESCM_LIBS="$GUILE_LDFLAGS $BSESCM_LIBS" 
+     else
+--- beast-0.7.4/shell/bsescm.c.orig	2011-04-08 19:39:22.000000000 +0200
++++ beast-0.7.4/shell/bsescm.c	2012-04-26 21:18:52.321900930 +0200
+@@ -17,7 +17,7 @@
+ #include <string.h>
+ #include <errno.h>
+ #include <unistd.h>
+-#include <guile/gh.h>
++#include <libguile.h>
+ #include <bse/bse.h>
+ #include <bse/bsemain.h>  /* for bse_init_textdomain_only() */
+ #include <sfi/sfistore.h> /* no bin-compat */
+@@ -33,7 +33,8 @@
+ 
+ 
+ /* --- prototypes --- */
+-static void	gh_main			(gint	 argc,
++static void	gh_main			(void *closure,
++					 gint	 argc,
+ 					 gchar	*argv[]);
+ static void	shell_parse_args	(gint    *argc_p,
+ 					 gchar ***argv_p);
+@@ -108,14 +109,15 @@ main (int   argc,
+   /* now that the BSE thread runs, drop scheduling priorities if we have any */
+   setpriority (PRIO_PROCESS, getpid(), 0);
+ 
+-  gh_enter (argc, argv, gh_main);
++  scm_boot_guile (argc, argv, gh_main, NULL);
+ 
+   return 0;
+ }
+ 
+ 
+ static void
+-gh_main (int   argc,
++gh_main (void * closure,
++	 int   argc,
+ 	 char *argv[])
+ {
+   /* initial interpreter setup */
+@@ -130,11 +132,11 @@ gh_main (int   argc,
+ 
+   /* exec Bse Scheme bootup code */
+   const gchar *boot_script = g_intern_printf ("%s/%s", boot_script_path, "bse-scm-glue.boot");
+-  gh_load (boot_script);
++  scm_c_primitive_load (boot_script);
+ 
+   /* eval, auto-play or interactive */
+   if (bse_scm_eval_expr)
+-    gh_eval_str (bse_scm_eval_expr);
++    scm_c_eval_string (bse_scm_eval_expr);
+   else
+     {
+       gboolean call_auto_play = FALSE;
+@@ -157,14 +159,14 @@ gh_main (int   argc,
+         }
+       /* auto-play or interactive */
+       if (call_auto_play)
+-        gh_eval_str ("(bse-scm-auto-play)");
++        scm_c_eval_string ("(bse-scm-auto-play)");
+       else 
+         {
+           if (bse_scm_auto_load)
+-            gh_eval_str ("(bse-server-register-blocking bse-server-register-core-plugins #f)"
++            scm_c_eval_string ("(bse-server-register-blocking bse-server-register-core-plugins #f)"
+                          "(bse-server-register-blocking bse-server-register-scripts #f)"
+                          "(bse-server-register-blocking bse-server-register-ladspa-plugins #f)");
+-          gh_repl (argc, argv);
++          scm_shell (argc, argv);
+         }
+     }
+ 
+--- beast-0.7.4/shell/bsescminterp.h.orig	2011-04-08 19:39:22.000000000 +0200
++++ beast-0.7.4/shell/bsescminterp.h	2012-04-26 20:11:33.745318439 +0200
+@@ -18,7 +18,7 @@
+ #define __BSE_SCM_INTERP_H__
+ 
+ #include <bse/bse.h>
+-#include <guile/gh.h>
++#include <libguile.h>
+ 
+ G_BEGIN_DECLS
+ 
+--- beast-0.7.4/shell/bsescminterp.c.orig	2011-04-08 19:39:22.000000000 +0200
++++ beast-0.7.4/shell/bsescminterp.c	2012-04-26 20:59:51.038591385 +0200
+@@ -55,7 +55,7 @@
+ #define IS_SCM_INT(s_scm)               SCM_I_INUMP (s_scm)     // scm_is_integer() breaks for non-fractional floats
+ #define SFI_NUM_FROM_SCM(s_scm)         ((SfiNum) scm_to_int64 (s_scm))
+ #define STRING_CHARS_FROM_SCM(s_scm)    scm_i_string_chars (s_scm)
+-#define STRING_LENGTH_FROM_SCM(s_scm)   scm_i_string_length (s_scm)
++#define STRING_LENGTH_FROM_SCM(s_scm)   scm_c_string_length (s_scm)
+ #define IS_SCM_STRING(s_scm)            scm_is_string (s_scm)
+ #define IS_SCM_SYMBOL(s_scm)            scm_is_symbol (s_scm)
+ #define IS_SCM_BOOL(s_scm)              scm_is_bool (s_scm)
+@@ -157,7 +157,7 @@ bse_scm_enter_gc (SCM           *scm_gc_
+   gc_cell->free_func = free_func;
+   gc_cell->size_hint = size_hint + sizeof (BseScmGCCell);
+   SCM_NEWSMOB (s_cell, tc_glue_gc_cell, gc_cell);
+-  *scm_gc_list = gh_cons (s_cell, *scm_gc_list);
++  *scm_gc_list = scm_cons (s_cell, *scm_gc_list);
+ }
+ 
+ static SCM
+@@ -494,21 +494,21 @@ bse_scm_from_value (const GValue *value)
+       sval = sfi_value_get_bool (value) ? SCM_BOOL_T : SCM_BOOL_F;
+       break;
+     case SFI_SCAT_INT:
+-      sval = gh_long2scm (sfi_value_get_int (value));
++      sval = scm_from_long (sfi_value_get_int (value));
+       break;
+     case SFI_SCAT_NUM:
+       sval = scm_long_long2num (sfi_value_get_num (value));
+       break;
+     case SFI_SCAT_REAL:
+-      sval = gh_double2scm (sfi_value_get_real (value));
++      sval = scm_make_real (sfi_value_get_real (value));
+       break;
+     case SFI_SCAT_STRING:
+       str = sfi_value_get_string (value);
+-      sval = str ? gh_str02scm (str) : BSE_SCM_NIL;
++      sval = str ? scm_from_locale_string (str) : BSE_SCM_NIL;
+       break;
+     case SFI_SCAT_CHOICE:
+       str = sfi_value_get_choice (value);
+-      sval = str ? gh_symbol2scm (str) : BSE_SCM_NIL;
++      sval = str ? scm_from_locale_symbol (str) : BSE_SCM_NIL;
+       break;
+     case SFI_SCAT_BBLOCK:
+       sval = BSE_SCM_NIL;
+@@ -692,7 +692,7 @@ signal_marshal_sproc (void *data)
+   sdata->n_args = 0;
+ 
+   while (i--)
+-    args = gh_cons (bse_scm_from_value (sdata->args + i), args);
++    args = scm_cons (bse_scm_from_value (sdata->args + i), args);
+ 
+   s_ret = scm_apply (sdata->s_lambda, args, SCM_EOL);
+ 
+@@ -729,7 +729,7 @@ bse_scm_signal_connect (SCM s_proxy,
+   proxy = SCM_GET_GLUE_PROXY (s_proxy);
+ 
+   SCM_ASSERT (IS_SCM_STRING (s_signal), s_signal, SCM_ARG2, "bse-signal-connect");
+-  SCM_ASSERT (gh_procedure_p (s_lambda), s_lambda,  SCM_ARG3, "bse-signal-connect");
++  SCM_ASSERT (scm_is_true(scm_procedure_p (s_lambda)), s_lambda,  SCM_ARG3, "bse-signal-connect");
+ 
+   scm_gc_protect_object (s_lambda);
+ 
+@@ -744,7 +744,7 @@ bse_scm_signal_connect (SCM s_proxy,
+   id = sfi_glue_signal_connect_closure (proxy, sdata->signal, closure, NULL);
+   BSE_SCM_ALLOW_INTS ();
+   
+-  return gh_ulong2scm (id);
++  return scm_from_ulong (id);
+ }
+ 
+ SCM
+@@ -917,14 +917,6 @@ void
+ bse_scm_enable_script_register (gboolean enabled)
+ {
+   script_register_enabled = enabled != FALSE;
+-  if (script_register_enabled)
+-    {
+-      /* enable position recording wchih is required for __FILE__ and __LINE__ emulation */
+-      SCM_DEVAL_P = 1;
+-      SCM_BACKTRACE_P = 1;
+-      SCM_RECORD_POSITIONS_P = 1;
+-      SCM_RESET_DEBUG_MODE;
+-    }
+ }
+ 
+ SCM
+@@ -1081,7 +1073,7 @@ bse_scm_context_pending (void)
+   pending = sfi_glue_context_pending ();
+   BSE_SCM_ALLOW_INTS ();
+ 
+-  return gh_bool2scm (pending);
++  return scm_from_bool (pending);
+ }
+ 
+ SCM
+@@ -1090,7 +1082,7 @@ bse_scm_context_iteration (SCM s_may_blo
+   BSE_SCM_DEFER_INTS ();
+   if (sfi_glue_context_pending ())
+     sfi_glue_context_dispatch ();
+-  else if (gh_scm2bool (s_may_block))
++  else if (scm_from_bool (s_may_block))
+     {
+       /* FIXME: we need a real poll() based wait implementation here */
+       do
+@@ -1124,14 +1116,14 @@ register_types (const gchar **types)
+ 	{
+ 	  s = g_strdup_printf ("(define (bse-is-%s proxy) (bse-item-check-is-a proxy \"%s\"))",
+ 			       sname + 4, *types);
+-	  gh_eval_str (s);
++	  scm_c_eval_string (s);
+ 	  g_free (s);
+ 	}
+       for (i = 0; names[i]; i++)
+ 	{
+ 	  gchar *s = g_strdup_printf ("(define %s-%s (lambda list (bse-glue-call \"%s+%s\" list)))",
+ 				      sname, names[i], *types, names[i]);
+-	  gh_eval_str (s);
++	  scm_c_eval_string (s);
+ 	  g_free (s);
+ 	}
+       g_free (sname);
+@@ -1159,29 +1151,29 @@ bse_scm_interp_init (void)
+ 
+   tc_glue_rec = scm_make_smob_type ("BseGlueRec", 0);
+   scm_set_smob_free (tc_glue_rec, bse_scm_free_glue_rec);
+-  gh_new_procedure ("bse-rec-get", bse_scm_glue_rec_get, 2, 0, 0);
+-  gh_new_procedure ("bse-rec-set", bse_scm_glue_rec_set, 3, 0, 0);
+-  gh_new_procedure ("bse-rec-new", bse_scm_glue_rec_new, 0, 1, 0);
+-  gh_new_procedure ("bse-rec-print", bse_scm_glue_rec_print, 1, 0, 0);
++  scm_c_define_gsubr ("bse-rec-get", 2, 0, 0, bse_scm_glue_rec_get);
++  scm_c_define_gsubr ("bse-rec-set", 3, 0, 0, bse_scm_glue_rec_set);
++  scm_c_define_gsubr ("bse-rec-new", 0, 1, 0, bse_scm_glue_rec_new);
++  scm_c_define_gsubr ("bse-rec-print", 1, 0, 0, bse_scm_glue_rec_print);
+ 
+   tc_glue_proxy = scm_make_smob_type ("SfiProxy", 0);
+   SCM_NEWSMOB (glue_null_proxy, tc_glue_proxy, 0);
+   scm_permanent_object (glue_null_proxy);
+   scm_set_smob_equalp (tc_glue_proxy, bse_scm_proxy_equalp);
+   scm_set_smob_print (tc_glue_proxy, bse_scm_proxy_print);
+-  gh_new_procedure ("bse-proxy-is-null?", bse_scm_proxy_is_null, 1, 0, 0);
+-  gh_new_procedure ("bse-proxy-get-null", bse_scm_proxy_get_null, 0, 1, 0);
++  scm_c_define_gsubr ("bse-proxy-is-null?", 1, 0, 0, bse_scm_proxy_is_null);
++  scm_c_define_gsubr ("bse-proxy-get-null", 0, 1, 0, bse_scm_proxy_get_null);
+ 
+-  gh_new_procedure ("bse-glue-call", bse_scm_glue_call, 2, 0, 0);
+-  gh_new_procedure ("bse-glue-set-prop", bse_scm_glue_set_prop, 3, 0, 0);
+-  gh_new_procedure ("bse-glue-get-prop", bse_scm_glue_get_prop, 2, 0, 0);
++  scm_c_define_gsubr ("bse-glue-call", 2, 0, 0, bse_scm_glue_call);
++  scm_c_define_gsubr ("bse-glue-set-prop", 3, 0, 0, bse_scm_glue_set_prop);
++  scm_c_define_gsubr ("bse-glue-get-prop", 2, 0, 0, bse_scm_glue_get_prop);
+ 
+   procs = sfi_glue_list_proc_names ();
+   for (i = 0; procs[i]; i++)
+     if (strncmp (procs[i], "bse-", 4) == 0)
+       {
+ 	gchar *s = g_strdup_printf ("(define bse-%s (lambda list (bse-glue-call \"%s\" list)))", procs[i] + 4, procs[i]);
+-	gh_eval_str (s);
++	scm_c_eval_string (s);
+ 	g_free (s);
+       }
+ 
+@@ -1189,15 +1181,15 @@ bse_scm_interp_init (void)
+   procs2[1] = NULL;
+   register_types (procs2);
+ 
+-  gh_new_procedure0_0 ("bse-server-get", bse_scm_server_get);
+-  gh_new_procedure ("bse-script-register", bse_scm_script_register, 6, 0, 1);
+-  gh_new_procedure ("bse-script-fetch-args", bse_scm_script_args, 0, 0, 0);
+-  gh_new_procedure ("bse-choice-match?", bse_scm_choice_match, 2, 0, 0);
+-  gh_new_procedure ("bse-signal-connect", bse_scm_signal_connect, 3, 0, 0);
+-  gh_new_procedure ("bse-signal-disconnect", bse_scm_signal_disconnect, 2, 0, 0);
+-  gh_new_procedure ("bse-context-pending", bse_scm_context_pending, 0, 0, 0);
+-  gh_new_procedure ("bse-context-iteration", bse_scm_context_iteration, 1, 0, 0);
+-  gh_new_procedure ("bse-script-message", bse_scm_script_message, 1, 0, 1);
+-  gh_new_procedure ("bse-gettext", bse_scm_gettext, 1, 0, 0);
+-  gh_new_procedure ("bse-gettext-q", bse_scm_gettext_q, 1, 0, 0);
++  scm_c_define_gsubr ("bse-server-get", 0, 0, 0, bse_scm_server_get);
++  scm_c_define_gsubr ("bse-script-register", 6, 0, 1, bse_scm_script_register);
++  scm_c_define_gsubr ("bse-script-fetch-args", 0, 0, 0, bse_scm_script_args);
++  scm_c_define_gsubr ("bse-choice-match?", 2, 0, 0, bse_scm_choice_match);
++  scm_c_define_gsubr ("bse-signal-connect", 3, 0, 0, bse_scm_signal_connect);
++  scm_c_define_gsubr ("bse-signal-disconnect", 2, 0, 0, bse_scm_signal_disconnect);
++  scm_c_define_gsubr ("bse-context-pending", 0, 0, 0, bse_scm_context_pending);
++  scm_c_define_gsubr ("bse-context-iteration", 1, 0, 0, bse_scm_context_iteration);
++  scm_c_define_gsubr ("bse-script-message", 1, 0, 1, bse_scm_script_message);
++  scm_c_define_gsubr ("bse-gettext", 1, 0, 0, bse_scm_gettext);
++  scm_c_define_gsubr ("bse-gettext-q", 1, 0, 0, bse_scm_gettext_q);
+ }

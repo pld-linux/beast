@@ -1,0 +1,11 @@
+--- beast-0.7.4/bse/bsecxxvalue.cc.orig	2011-04-08 19:39:21.000000000 +0200
++++ beast-0.7.4/bse/bsecxxvalue.cc	2012-04-26 16:51:16.032235592 +0200
+@@ -56,7 +56,7 @@
+ {
+   GValue *v = gvalue();
+   if (SFI_VALUE_HOLDS_STRING (v))
+-    return sfi_value_get_string (v);
++    return (const SfiString)sfi_value_get_string (v);
+   else if (SFI_VALUE_HOLDS_CHOICE (v))
+     return sfi_value_get_choice (v);
+   else
